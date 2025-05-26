@@ -4,8 +4,11 @@ FROM eclipse-temurin:21-jdk
 # Set working directory inside the container
 WORKDIR /app
 
-# Copy the fat JAR file to the container
-COPY build/libs/RandomMovieApp-1.0-SNAPSHOT-all.jar app.jar
+# Accept the JAR file name as a build argument
+ARG JAR_FILE
+
+# Copy the fat JAR file to the container, using the build argument
+COPY ${JAR_FILE} app.jar
 
 # Expose the port your app listens on
 EXPOSE 8080
