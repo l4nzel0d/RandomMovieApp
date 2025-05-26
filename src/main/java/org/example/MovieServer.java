@@ -17,13 +17,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * A simple HTTP server that serves static files and provides a REST API endpoint
+ * to return a random movie in JSON format from a preloaded list.
+ */
 public class MovieServer {
 
+    /**
+     * Entry point to start the HTTP server.
+     *
+     * @param args command line arguments (not used)
+     * @throws IOException          if I/O error occurs during server startup or resource loading
+     * @throws InterruptedException if the main thread is interrupted while waiting
+     */
     public static void main(String[] args) throws IOException, InterruptedException {
         int port = 8080;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
-        // Load movies.json from resources
         InputStream moviesStream = MovieServer.class.getClassLoader().getResourceAsStream("movies.json");
         if (moviesStream == null) {
             System.err.println("movies.json not found!");
@@ -33,12 +43,10 @@ public class MovieServer {
         Type movieListType = new TypeToken<List<Movie>>(){}.getType();
         List<Movie> movies = new Gson().fromJson(json, movieListType);
 
-        // Static file handlers
         server.createContext("/", new StaticFileHandler("index.html"));
         server.createContext("/styles.css", new StaticFileHandler("styles.css"));
         server.createContext("/script.js", new StaticFileHandler("script.js"));
 
-        // Random movie API handler
         server.createContext("/random", new RandomMovieHandler(movies));
 
         server.setExecutor(null);
@@ -55,21 +63,12 @@ public class MovieServer {
         Thread.currentThread().join();
     }
 
-    // A very basic HTTP Handler that always returns "Hello from Movie Server!"
-    static class MySimpleHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            String response = "Hello from Movie Server!";
-            exchange.getResponseHeaders().set("Content-Type", "text/plain; charset=UTF-8");
-            exchange.sendResponseHeaders(200, response.getBytes().length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
-        }
-    }
-
+    /**
+     * HTTP handler for serving static files from resources under 'static/' directory.
+     */
     static class StaticFileHandler implements HttpHandler {
         private final String fileName;
+
         private static final Map<String, String> MIME_TYPES = new HashMap<>();
         static {
             MIME_TYPES.put("html", "text/html; charset=UTF-8");
@@ -79,13 +78,23 @@ public class MovieServer {
             MIME_TYPES.put("png", "image/png");
             MIME_TYPES.put("jpg", "image/jpeg");
             MIME_TYPES.put("jpeg", "image/jpeg");
-            // add more if needed
         }
 
+        /**
+         * Creates a handler that serves the specified static file.
+         *
+         * @param fileName the file name to serve, relative to 'static/' directory in resources
+         */
         public StaticFileHandler(String fileName) {
             this.fileName = fileName;
         }
 
+        /**
+         * Handles the HTTP request by returning the file content or a 404 if not found.
+         *
+         * @param exchange the HTTP exchange containing request and response objects
+         * @throws IOException if an I/O error occurs
+         */
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             String extension = getExtension(fileName);
@@ -95,43 +104,65 @@ public class MovieServer {
             if (is == null) {
                 String response = "404 (Not Found)\n";
                 exchange.sendResponseHeaders(404, response.length());
-                OutputStream os = exchange.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response.getBytes());
+                }
                 return;
             }
 
             byte[] bytes = is.readAllBytes();
             exchange.getResponseHeaders().set("Content-Type", contentType);
             exchange.sendResponseHeaders(200, bytes.length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(bytes);
-            os.close();
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(bytes);
+            }
             is.close();
         }
 
+        /**
+         * Extracts the file extension from a file name.
+         *
+         * @param fileName the file name
+         * @return the file extension without the dot, or empty string if none
+         */
         private String getExtension(String fileName) {
             int lastDot = fileName.lastIndexOf('.');
             return lastDot == -1 ? "" : fileName.substring(lastDot + 1);
         }
     }
 
+    /**
+     * HTTP handler for serving a random movie in JSON format.
+     * Ensures the same movie is not returned consecutively.
+     */
     static class RandomMovieHandler implements HttpHandler {
         private final List<Movie> movies;
         private final Random random = new Random();
         private final Gson gson = new Gson();
-        private int lastIndex = -1;  // Store last sent movie index
+        private int lastIndex = -1;
 
+        /**
+         * Constructs a handler with a list of movies to choose from.
+         *
+         * @param movies the list of movies available to serve randomly
+         */
         public RandomMovieHandler(List<Movie> movies) {
             this.movies = movies;
         }
 
+        /**
+         * Handles the HTTP request by responding with a JSON of a random movie,
+         * avoiding repetition of the same movie twice in a row.
+         *
+         * @param exchange the HTTP exchange containing request and response
+         * @throws IOException if an I/O error occurs
+         */
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             int newIndex;
 
             if (movies.size() == 1) {
-                newIndex = 0; // Only one movie available, no choice
+                newIndex = 0;
             } else {
                 do {
                     newIndex = random.nextInt(movies.size());
@@ -150,6 +181,4 @@ public class MovieServer {
             }
         }
     }
-
 }
-
