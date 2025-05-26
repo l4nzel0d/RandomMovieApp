@@ -1,5 +1,7 @@
 package org.example;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -7,25 +9,50 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class MovieServer {
 
-    public static void main(String[] args) throws IOException {
-        int port = 8080; // The port our server will listen on
+    public static void main(String[] args) throws IOException, InterruptedException {
+        int port = 8080;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
-        // Create a simple context handler for the root path "/"
+        // Load movies.json from resources
+        InputStream moviesStream = MovieServer.class.getClassLoader().getResourceAsStream("movies.json");
+        if (moviesStream == null) {
+            System.err.println("movies.json not found!");
+            System.exit(1);
+        }
+        String json = new String(moviesStream.readAllBytes(), StandardCharsets.UTF_8);
+        Type movieListType = new TypeToken<List<Movie>>(){}.getType();
+        List<Movie> movies = new Gson().fromJson(json, movieListType);
+
+        // Static file handlers
         server.createContext("/", new StaticFileHandler("index.html"));
         server.createContext("/styles.css", new StaticFileHandler("styles.css"));
         server.createContext("/script.js", new StaticFileHandler("script.js"));
 
-        server.setExecutor(null); // Use the default executor
+        // Random movie API handler
+        server.createContext("/random", new RandomMovieHandler(movies));
+
+        server.setExecutor(null);
         server.start();
+
         System.out.println("Server started successfully on port " + port);
         System.out.println("Visit http://localhost:" + port + " in your browser.");
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Stopping server...");
+            server.stop(0);
+        }));
+
+        Thread.currentThread().join();
     }
 
     // A very basic HTTP Handler that always returns "Hello from Movie Server!"
@@ -88,5 +115,41 @@ public class MovieServer {
             return lastDot == -1 ? "" : fileName.substring(lastDot + 1);
         }
     }
+
+    static class RandomMovieHandler implements HttpHandler {
+        private final List<Movie> movies;
+        private final Random random = new Random();
+        private final Gson gson = new Gson();
+        private int lastIndex = -1;  // Store last sent movie index
+
+        public RandomMovieHandler(List<Movie> movies) {
+            this.movies = movies;
+        }
+
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            int newIndex;
+
+            if (movies.size() == 1) {
+                newIndex = 0; // Only one movie available, no choice
+            } else {
+                do {
+                    newIndex = random.nextInt(movies.size());
+                } while (newIndex == lastIndex);
+            }
+
+            lastIndex = newIndex;
+            Movie randomMovie = movies.get(newIndex);
+            String jsonResponse = gson.toJson(randomMovie);
+
+            exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
+            byte[] bytes = jsonResponse.getBytes(StandardCharsets.UTF_8);
+            exchange.sendResponseHeaders(200, bytes.length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(bytes);
+            }
+        }
+    }
+
 }
 
