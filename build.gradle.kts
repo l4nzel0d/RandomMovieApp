@@ -33,9 +33,10 @@ application {
 tasks.test {
     useJUnitPlatform()
 }
-// Task to create a fat JAR including all dependencies
+
 tasks.register<Jar>("fatJar") {
     archiveClassifier.set("all")
+    description = "Creates a fat JAR including all dependencies"
     archiveVersion.set(version.toString())
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from(sourceSets.main.get().output)
@@ -68,7 +69,6 @@ docker {
 }
 
 
-// Task to forcibly remove the container if it already exists
 tasks.register<Exec>("removeDockerContainerIfExists") {
     group = "docker"
     description = "Removes the Docker container if it exists to avoid conflicts"
@@ -76,8 +76,7 @@ tasks.register<Exec>("removeDockerContainerIfExists") {
     isIgnoreExitValue = true  // don't fail if container doesn't exist
 }
 
-// Task to run the Docker container in detached mode
-tasks.register("runDockerContainer") {
+tasks.register("runAppContainer") {
     group = "docker"
     description = "Runs the Docker container for the RandomMovieApp"
     dependsOn("docker", "removeDockerContainerIfExists")  // build image before running
@@ -92,10 +91,11 @@ tasks.register("runDockerContainer") {
             )
         }
     }
+
+    println("RandomMovieApp is running at http://localhost:8080/")
 }
 
-// Task to stop and remove the Docker container
-tasks.register("stopDockerContainer") {
+tasks.register("stopAppContainer") {
     group = "docker"
     description = "Stops and removes the Docker container if running"
 
@@ -105,4 +105,18 @@ tasks.register("stopDockerContainer") {
             isIgnoreExitValue = true  // ignore if container not found
         }
     }
+}
+
+tasks.register<Exec>("removeDockerImageIfExists") {
+    group = "docker"
+    description = "Removes the Docker image for the app"
+    commandLine("docker", "rmi", "-f", dockerImageName)
+    isIgnoreExitValue = true
+}
+
+tasks.register("cleanDocker") {
+    group = "docker"
+    description = "Removes Docker container and image for the app"
+
+    dependsOn("stopAppContainer", "removeDockerImageIfExists")
 }
