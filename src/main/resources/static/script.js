@@ -11,14 +11,16 @@ async function fetchRandomMovie() {
 }
 
 function displayMovie(movie) {
-    const movieDiv = document.getElementById('movie');
-    movieDiv.innerHTML = `
-        <h2>${movie.title} (${movie.year})</h2>
-        <img src="${movie.posterUrl}" alt="Poster of ${movie.title}" />
-        <p><strong>Genre:</strong> ${movie.genre}</p>
-        <p><strong>Actors:</strong> ${movie.actors.join(', ')}</p>
-    `;
+    document.getElementById('movie-title').textContent = `${movie.title} (${movie.year})`;
+
+    const poster = document.getElementById('movie-poster');
+    poster.src = movie.posterUrl;
+    poster.alt = `Poster of ${movie.title}`;
+
+    document.getElementById('movie-genre').textContent = movie.genre;
+    document.getElementById('movie-actors').textContent = movie.actors.join(', ');
 }
+
 
 document.getElementById('new-movie').addEventListener('click', fetchRandomMovie);
 
