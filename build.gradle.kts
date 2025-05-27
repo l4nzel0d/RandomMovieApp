@@ -111,12 +111,24 @@ tasks.register("stopAppContainer") {
     }
 }
 
-tasks.register<Exec>("removeDockerImageIfExists") {
+tasks.register("removeDockerImageIfExists") {
     group = "docker"
     description = "Removes the Docker image for the app"
-    commandLine("docker", "rmi", "-f", dockerImageName)
-    commandLine("docker", "image", "prune", "-f")
-    isIgnoreExitValue = true
+
+    doLast {
+        exec {
+            commandLine("docker", "rmi", "-f", dockerImageName)
+            isIgnoreExitValue = true
+        }
+        exec {
+            commandLine("docker", "image", "prune", "-f")
+            isIgnoreExitValue = true
+        }
+    }
+}
+
+tasks.named("removeDockerImageIfExists") {
+    mustRunAfter("stopAppContainer")
 }
 
 tasks.register("cleanDocker") {
