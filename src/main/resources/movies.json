@@ -4,55 +4,274 @@
     "posterUrl": "https://a.ltrbxd.com/resized/film-poster/5/1/5/1/8/51518-the-matrix-0-1000-0-1500-crop.jpg",
     "year": 1999,
     "genre": "Science Fiction",
-    "actors": ["Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss"]
+    "actors": [
+      "Keanu Reeves",
+      "Laurence Fishburne",
+      "Carrie-Anne Moss"
+    ]
   },
   {
     "title": "Inception",
     "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/sv/95/s9/4j/inception-0-1000-0-1500-crop.jpg",
     "year": 2010,
     "genre": "Science Fiction",
-    "actors": ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"]
+    "actors": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Elliot Page"
+    ]
   },
   {
     "title": "The Dark Knight",
     "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/78/y5/zg/ej/oefdD26aey8GPdx7Rm45PNncJdU-0-1000-0-1500-crop.jpg?v=2d0ce4be25",
     "year": 2008,
     "genre": "Action",
-    "actors": ["Christian Bale", "Heath Ledger", "Aaron Eckhart"]
+    "actors": [
+      "Christian Bale",
+      "Heath Ledger",
+      "Aaron Eckhart"
+    ]
   },
   {
     "title": "Interstellar",
     "posterUrl": "https://a.ltrbxd.com/resized/film-poster/1/1/7/6/2/1/117621-interstellar-0-1000-0-1500-crop.jpg?v=7ad89e6666",
     "year": 2014,
     "genre": "Science Fiction",
-    "actors": ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"]
+    "actors": [
+      "Matthew McConaughey",
+      "Anne Hathaway",
+      "Jessica Chastain"
+    ]
   },
   {
     "title": "Pulp Fiction",
     "posterUrl": "https://a.ltrbxd.com/resized/film-poster/5/1/4/4/4/51444-pulp-fiction-0-1000-0-1500-crop.jpg?v=dee19a8077",
     "year": 1994,
     "genre": "Crime",
-    "actors": ["John Travolta", "Uma Thurman", "Samuel L. Jackson"]
+    "actors": [
+      "John Travolta",
+      "Uma Thurman",
+      "Samuel L. Jackson"
+    ]
   },
   {
     "title": "The Shawshank Redemption",
     "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/7l/hn/46/uz/zGINvGjdlO6TJRu9wESQvWlOKVT-0-1000-0-1500-crop.jpg?v=8736d1c395",
     "year": 1994,
     "genre": "Drama",
-    "actors": ["Tim Robbins", "Morgan Freeman", "Bob Gunton"]
+    "actors": [
+      "Tim Robbins",
+      "Morgan Freeman",
+      "Bob Gunton"
+    ]
   },
   {
     "title": "Fight Club",
     "posterUrl": "https://a.ltrbxd.com/resized/film-poster/5/1/5/6/8/51568-fight-club-0-1000-0-1500-crop.jpg?v=768b32dfa4",
     "year": 1999,
     "genre": "Drama",
-    "actors": ["Brad Pitt", "Edward Norton", "Helena Bonham Carter"]
+    "actors": [
+      "Brad Pitt",
+      "Edward Norton",
+      "Helena Bonham Carter"
+    ]
   },
   {
     "title": "Forrest Gump",
     "posterUrl": "https://a.ltrbxd.com/resized/film-poster/2/7/0/4/2704-forrest-gump-0-1000-0-1500-crop.jpg?v=173bc04cf0",
     "year": 1994,
     "genre": "Drama",
-    "actors": ["Tom Hanks", "Robin Wright", "Gary Sinise"]
+    "actors": [
+      "Tom Hanks",
+      "Robin Wright",
+      "Gary Sinise"
+    ]
+  },
+  {
+    "title": "Gladiator",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/files/Gladiator.mpw.102813_500x749.jpg?v=1707500493",
+    "year": 2000,
+    "genre": "Action",
+    "actors": [
+      "Russell Crowe",
+      "Joaquin Phoenix",
+      "Connie Nielsen"
+    ]
+  },
+  {
+    "title": "The Godfather",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/godfather.132843.mp_500x749.jpg?v=1654286052",
+    "year": 1972,
+    "genre": "Crime",
+    "actors": [
+      "Marlon Brando",
+      "Al Pacino",
+      "James Caan"
+    ]
+  },
+  {
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/files/ItemP2658_jpg_500x749.jpg?v=1692302023",
+    "year": 2001,
+    "genre": "Fantasy",
+    "actors": [
+      "Elijah Wood",
+      "Ian McKellen",
+      "Viggo Mortensen"
+    ]
+  },
+  {
+    "title": "The Lord of the Rings: The Two Towers",
+    "posterUrl": "https://www.movieposters.com/cdn/shop/products/the-lord-of-the-rings-the-two-towers_0epuid3z_480x.progressive.jpg?v=1651588290",
+    "year": 2002,
+    "genre": "Fantasy",
+    "actors": [
+      "Elijah Wood",
+      "Ian McKellen",
+      "Viggo Mortensen"
+    ]
+  },
+  {
+    "title": "The Lord of the Rings: The Return of the King",
+    "posterUrl": "https://www.movieposters.com/products/lord-of-the-rings-the-return-of-the-king-mpw-10391",
+    "year": 2003,
+    "genre": "Fantasy",
+    "actors": [
+      "Elijah Wood",
+      "Sean Astin",
+      "Ian McKellen"
+    ]
+  },
+  {
+    "title": "The Silence of the Lambs",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/files/silencelambs.C.17449.mpw_500x749.jpg?v=1727097024",
+    "year": 1991,
+    "genre": "Thriller",
+    "actors": [
+      "Jodie Foster",
+      "Anthony Hopkins",
+      "Scott Glenn"
+    ]
+  },
+  {
+    "title": "Se7en",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/files/seven..mpw.122539_500x749.jpg?v=1709821255",
+    "year": 1995,
+    "genre": "Crime",
+    "actors": [
+      "Brad Pitt",
+      "Morgan Freeman",
+      "Kevin Spacey"
+    ]
+  },
+  {
+    "title": "Titanic",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/files/Titanic.mpw.102378_500x749.jpg?v=1709331723",
+    "year": 1997,
+    "genre": "Romance",
+    "actors": [
+      "Leonardo DiCaprio",
+      "Kate Winslet",
+      "Billy Zane"
+    ]
+  },
+  {
+    "title": "The Social Network",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/84d64a25ef3d23b652c5ea42f419e0d8_a1f6f969-9077-4792-83f6-a20e83fea71a_500x749.jpg?v=1573591596",
+    "year": 2010,
+    "genre": "Drama",
+    "actors": [
+      "Jesse Eisenberg",
+      "Andrew Garfield",
+      "Justin Timberlake"
+    ]
+  },
+  {
+    "title": "Whiplash",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/files/Whiplash-VER1_500x749.jpg?v=1723579793",
+    "year": 2014,
+    "genre": "Drama",
+    "actors": [
+      "Miles Teller",
+      "J.K. Simmons",
+      "Paul Reiser"
+    ]
+  },
+  {
+    "title": "Mad Max: Fury Road",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/3f110b97df39b483537401d91a63e330_76580aad-ccc8-4727-8b92-fb88f15db9e8_500x749.jpg?v=1573653900",
+    "year": 2015,
+    "genre": "Action",
+    "actors": [
+      "Tom Hardy",
+      "Charlize Theron",
+      "Nicholas Hoult"
+    ]
+  },
+  {
+    "title": "The Grand Budapest Hotel",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/44b26f88e0fb3f1bf0a0660c099b8b19_b27d3a0c-9867-4ef1-a59d-f5304521c18d_500x749.jpg?v=1573594939",
+    "year": 2014,
+    "genre": "Comedy",
+    "actors": [
+      "Ralph Fiennes",
+      "Tony Revolori",
+      "Saoirse Ronan"
+    ]
+  },
+  {
+    "title": "Parasite",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/parasite-24x36_500x749.jpg?v=1590609910",
+    "year": 2019,
+    "genre": "Thriller",
+    "actors": [
+      "Song Kang-ho",
+      "Lee Sun-kyun",
+      "Cho Yeo-jeong"
+    ]
+  },
+  {
+    "title": "Joker",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/JOKER.PW.REP_500x749.jpg?v=1574965207",
+    "year": 2019,
+    "genre": "Crime",
+    "actors": [
+      "Joaquin Phoenix",
+      "Robert De Niro",
+      "Zazie Beetz"
+    ]
+  },
+  {
+    "title": "La La Land",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/files/LaLaLand.24x36_500x749.jpg?v=1708547804",
+    "year": 2016,
+    "genre": "Musical",
+    "actors": [
+      "Ryan Gosling",
+      "Emma Stone",
+      "John Legend"
+    ]
+  },
+  {
+    "title": "The Prestige",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/files/prestige.mp.140332_500x749.jpg?v=1709237534",
+    "year": 2006,
+    "genre": "Mystery",
+    "actors": [
+      "Christian Bale",
+      "Hugh Jackman",
+      "Scarlett Johansson"
+    ]
+  },
+  {
+    "title": "Django Unchained",
+    "posterUrl": "https://cdn.shopify.com/s/files/1/0057/3728/3618/files/django-unchained_500x749.jpg?v=1727960005",
+    "year": 2012,
+    "genre": "Western",
+    "actors": [
+      "Jamie Foxx",
+      "Christoph Waltz",
+      "Leonardo DiCaprio"
+    ]
   }
 ]
