@@ -63,9 +63,11 @@ tasks.named<Copy>("dockerPrepare") {
 docker {
     name = "random-movie-app:latest"
     files("build/libs/$fatJarFileName", "Dockerfile")
-    buildArgs(mapOf(
-        "JAR_FILE" to fatJarFileName
-    ))
+    buildArgs(
+        mapOf(
+            "JAR_FILE" to fatJarFileName
+        )
+    )
 }
 
 
@@ -92,7 +94,9 @@ tasks.register("runAppContainer") {
         }
     }
 
-    println("RandomMovieApp is running at http://localhost:8080/")
+    doLast {
+        println("RandomMovieApp is running at http://localhost:8080/")
+    }
 }
 
 tasks.register("stopAppContainer") {
@@ -111,6 +115,7 @@ tasks.register<Exec>("removeDockerImageIfExists") {
     group = "docker"
     description = "Removes the Docker image for the app"
     commandLine("docker", "rmi", "-f", dockerImageName)
+    commandLine("docker", "image", "prune", "-f")
     isIgnoreExitValue = true
 }
 
