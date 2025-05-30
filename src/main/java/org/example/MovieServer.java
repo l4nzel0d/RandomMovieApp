@@ -12,10 +12,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * A simple HTTP server that serves static files and provides a REST API endpoint
@@ -136,42 +133,46 @@ public class MovieServer {
      * Ensures the same movie is not returned consecutively.
      */
     static class RandomMovieHandler implements HttpHandler {
-        private final List<Movie> movies;
+        private final List<Movie> originalMovies;
+        private final List<Movie> movieQueue = new ArrayList<>();
         private final Random random = new Random();
         private final Gson gson = new Gson();
-        private int lastIndex = -1;
+        private int currentIndex = 0;
 
         /**
-         * Constructs a handler with a list of movies to choose from.
+         * Constructs a handler with a list of movies to serve in a shuffled, non-repeating cycle.
          *
-         * @param movies the list of movies available to serve randomly
+         * @param movies the list of movies available to serve
          */
         public RandomMovieHandler(List<Movie> movies) {
-            this.movies = movies;
+            this.originalMovies = new ArrayList<>(movies);
+            reshuffleQueue();
         }
 
         /**
-         * Handles the HTTP request by responding with a JSON of a random movie,
-         * avoiding repetition of the same movie twice in a row.
+         * Reshuffles the movie queue randomly and resets the current index.
+         */
+        private void reshuffleQueue() {
+            movieQueue.clear();
+            movieQueue.addAll(originalMovies);
+            Collections.shuffle(movieQueue, random);
+            currentIndex = 0;
+        }
+
+        /**
+         * Handles the HTTP request by responding with a JSON of the next movie in a shuffled sequence.
          *
          * @param exchange the HTTP exchange containing request and response
          * @throws IOException if an I/O error occurs
          */
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            int newIndex;
-
-            if (movies.size() == 1) {
-                newIndex = 0;
-            } else {
-                do {
-                    newIndex = random.nextInt(movies.size());
-                } while (newIndex == lastIndex);
+            if (currentIndex >= movieQueue.size()) {
+                reshuffleQueue();
             }
 
-            lastIndex = newIndex;
-            Movie randomMovie = movies.get(newIndex);
-            String jsonResponse = gson.toJson(randomMovie);
+            Movie movie = movieQueue.get(currentIndex++);
+            String jsonResponse = gson.toJson(movie);
 
             exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
             byte[] bytes = jsonResponse.getBytes(StandardCharsets.UTF_8);
@@ -181,4 +182,5 @@ public class MovieServer {
             }
         }
     }
+
 }
